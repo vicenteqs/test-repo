@@ -1,58 +1,49 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule } from '@angular/material';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { CarListComponent } from './car-list/car-list.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {MatButtonModule, MatCardModule, MatInputModule, MatListModule, MatToolbarModule} from '@angular/material';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {CarListComponent} from './car-list/car-list.component';
+import {HttpModule} from '@angular/http';
 
-import { AppComponent } from './app.component';
+import {AppComponent} from './app.component';
+import {routing} from './app.routing';
 
-import { CarEditComponent } from './car-edit/car-edit.component';
+import {CarEditComponent} from './car-edit/car-edit.component';
 
-import { GiphyService } from './shared/giphy/giphy.service';
-import { CarService } from './shared/car/car.service';
-import { FormsModule } from '@angular/forms';
-import { RouterModule, Routes } from '@angular/router';
-
-
-const appRoutes: Routes = [
-  { path: '', redirectTo: '/car-list', 
-	pathMatch: 'full' 
-  },
-  {
-    path: 'car-list',
-    component: CarListComponent
-  },
-  {
-    path: 'car-add',
-    component: CarEditComponent
-  },
-  {
-    path: 'car-edit/:id',
-    component: CarEditComponent
-  }
-];
+import {GiphyService} from './shared/giphy/giphy.service';
+import {CarService} from './shared/car/car.service';
+import {FormsModule} from '@angular/forms';
+import {AuthGuard} from './_guards/auth.guard';
+import {AuthenticationService} from './_services/authentication.service';
+import {UserService} from './_services/user.service';
+import {LoginComponent} from './login/login.component';
+import {HomeComponent} from './home/home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-	CarListComponent,
-	CarEditComponent,
+    LoginComponent,
+    HomeComponent,
+    CarListComponent,
+    CarEditComponent,
   ],
   imports: [
     BrowserModule,
-	HttpClientModule,
-	BrowserAnimationsModule,
+    HttpModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,
     MatInputModule,
     MatListModule,
     MatToolbarModule,
-	FormsModule,
-    RouterModule.forRoot(appRoutes)
+    FormsModule,
+    routing
   ],
-  providers: [CarService, GiphyService],
+  providers: [CarService, GiphyService, AuthGuard, AuthenticationService, UserService],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
